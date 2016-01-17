@@ -28,4 +28,22 @@ class ProductTest < ActiveSupport::TestCase
     product.price= 1
     assert product.valid?
   end
+
+  test "image url"do
+    ok = %w{fred.gif fred.jpg fred.png}
+    bad = %w{fred.doc fred.gif/more}
+
+    ok.each do |name|
+      assert new_product(name).valid?, "#{name} shouldn`t be invalid`"
+    end
+  end
+
+  def new_product(image_url)
+    Product.new(
+               title: "Title",
+               description: "Description",
+               price: 13.99,
+               image_url: image_url
+    )
+  end
 end
